@@ -1,41 +1,23 @@
 ﻿using System;
 
-public class Program {
-    public static void Main(string[] args) {
+public class GradeBook {
 
-        int number1;
-        int number2;
-        int sum;
+    private string courseName;
 
-        Console.Write("Enter first int: ");
-        number1 = Convert.ToInt32(Console.ReadLine());
+    // is the same as the commented out one
+    public string CourseName { get; set; }
 
-        Console.Write("Enter second int: ");
-        number2 = Convert.ToInt32(Console.ReadLine());
 
-        if (number1 == number2) {
-            Console.WriteLine("{0} = {1}", number1, number2);
+    /* public string CourseName {
+        get {
+            return courseName;
         }
-
-        if (number1 != number2) {
-            Console.WriteLine("{0} != {1}", number1, number2);
+        set {
+            courseName = value;
         }
+    } */
 
-        if (number1 > number2) {
-            Console.WriteLine("{0} > {1}", number1, number2);
-        }
-
-        if (number1 < number2) {
-            Console.WriteLine("{0} < {1}", number1, number2);
-        }
-
-        if (number1 >= number2) {
-            Console.WriteLine("{0} >= {1}", number1, number2);
-        }
-
-        if (number1 <= number2) {
-            Console.WriteLine("{0} <= {1}", number1, number2);
-        }
-
+    public void DisplayMessage() {
+        Console.WriteLine("Welcome to the Grade Book for {0}!", CourseName);
     }
 }
