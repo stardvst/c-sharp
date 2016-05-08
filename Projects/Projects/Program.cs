@@ -13,9 +13,29 @@ public class Program {
         Console.Write("Enter second int: ");
         number2 = Convert.ToInt32(Console.ReadLine());
 
-        sum = number1 + number2;
+        if (number1 == number2) {
+            Console.WriteLine("{0} = {1}", number1, number2);
+        }
 
-        Console.WriteLine("Sum is {0}", sum);
+        if (number1 != number2) {
+            Console.WriteLine("{0} != {1}", number1, number2);
+        }
+
+        if (number1 > number2) {
+            Console.WriteLine("{0} > {1}", number1, number2);
+        }
+
+        if (number1 < number2) {
+            Console.WriteLine("{0} < {1}", number1, number2);
+        }
+
+        if (number1 >= number2) {
+            Console.WriteLine("{0} >= {1}", number1, number2);
+        }
+
+        if (number1 <= number2) {
+            Console.WriteLine("{0} <= {1}", number1, number2);
+        }
 
     }
 }
