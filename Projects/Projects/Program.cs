@@ -1,29 +1,32 @@
-﻿using System;
+﻿public class Account {
 
-public class GradeBook {
+    private decimal balance;
 
-    private string courseName;
+    public Account(decimal initialBalance) {
+        Balance = initialBalance;    
+    }
 
-    // is the same as the commented out one
-    public string CourseName {
+    public void Credit(decimal amount) {
+        Balance += amount;
+    }
+
+    public void Debit(decimal amount) {
+        if (amount <= Balance) {
+            Balance -= amount;
+        } else {
+            System.Console.WriteLine("Debit amount exceeded account balance.");
+        }                     
+    }
+
+    public decimal Balance {
         get {
-            return courseName;
+            return balance;
         }
         set {
-            courseName = value;
+            if (value >= 0) {
+                balance = value;
+            }
         }
     }
 
-    public string CourseAuthor { get; set; }
-
-    public GradeBook(string name, string author) {
-        CourseName = name;
-        CourseAuthor = author;
-    }
-
-    public void DisplayMessage() {
-        Console.WriteLine(
-            "Welcome to the Grade Book for {0} presented by {1}!",
-            CourseName, CourseAuthor);
-    }
 }
