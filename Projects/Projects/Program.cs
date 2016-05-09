@@ -1,24 +1,29 @@
-﻿public class Account {
+﻿using System;
 
-    private decimal balance;
+public class GradeBook {
 
-    public Account(decimal initialBalance) {
-        Balance = initialBalance;    
-    }
+    private string courseName;
 
-    public void Credit(decimal amount) {
-        Balance += amount;
-    }
-
-    public decimal Balance {
+    // is the same as the commented out one
+    public string CourseName {
         get {
-            return balance;
+            return courseName;
         }
         set {
-            if (value >= 0) {
-                balance = value;
-            }
+            courseName = value;
         }
     }
 
+    public string CourseAuthor { get; set; }
+
+    public GradeBook(string name, string author) {
+        CourseName = name;
+        CourseAuthor = author;
+    }
+
+    public void DisplayMessage() {
+        Console.WriteLine(
+            "Welcome to the Grade Book for {0} presented by {1}!",
+            CourseName, CourseAuthor);
+    }
 }
