@@ -3,11 +3,13 @@
 public class Program {
     public static void Main(string[] args) {
 
-        Account account = new Account(50.00M);
+        int[] gradesArray = { 87, 68, 94, 100, 83, 78, 85, 91, 76, 87 };
 
-        Console.Write("Enter debit amount: ");
-        decimal debit = Convert.ToDecimal(Console.ReadLine());
-        account.Debit(debit);
+		GradeBook myGradeBook = new GradeBook(
+			"CS101 Introduction to C# Programming", gradesArray);
 
-    }
+		myGradeBook.DisplayMessage();
+		myGradeBook.ProcessGrades();
+
+	}
 }
