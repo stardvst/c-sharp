@@ -1,23 +1,33 @@
 ﻿using System;
 
 public class Program {
+
+    public static double Average(params double[] numbers) {
+        double total = 0.0;
+        foreach (double d in numbers) {
+            total += d;
+        }
+        return total / numbers.Length;
+    }
+
     public static void Main(string[] args) {
 
-        int[,] gradesArray = { { 87, 96, 70 },
-                               { 68, 87, 90 },
-                               { 94, 100, 90 },
-                               { 100, 81, 82 },
-                               { 83, 65, 85 },
-                               { 78, 87, 65 },
-                               { 85, 75, 83 },
-                               { 91, 94, 100 },
-                               { 76, 72, 84 },
-                               { 87, 93, 73 } };
+        double d1 = 10.0;
+        double d2 = 20.0;
+        double d3 = 30.0;
+        double d4 = 40.0;
 
-        GradeBook myGradeBook = new GradeBook(
-            "CS101 Introduction to C# Programming", gradesArray);
-        myGradeBook.DisplayMessage();
-        myGradeBook.ProcessGrades();
+        Console.WriteLine(
+            "d1 = {0:F1}\nd2 = {1:F1}\nd3 = {2:F1}\nd4 = {3:F1}\n",
+            d1, d2, d3, d4);
+
+        Console.WriteLine("Average of d1 and d2 is {0:F1}",
+            Average(d1, d2));
+        Console.WriteLine("Average of d1, d2 and d3 is {0:F1}",
+            Average(d1, d2, d3));
+        Console.WriteLine("Average of d1, d2, d3 and d4 is {0:F1}",
+            Average(d1, d2, d3, d4));
 
     }
+
 }
