@@ -2,11 +2,11 @@
 
 public class GradeBook {
 
-    private int[] grades;
+    private int[ , ] grades;
 
     public string CourseName { get; set; }
 
-    public GradeBook(string name, int[] gradesArray) {
+    public GradeBook(string name, int[ , ] gradesArray) {
         CourseName = name;
         grades = gradesArray;
     }
@@ -20,7 +20,6 @@ public class GradeBook {
 
 		OutputGrades();
 
-		Console.WriteLine("Class average: {0:F}", GetAverage());
 		Console.WriteLine("Lowest grade: {0}\nHighest grade: {1}\n",
 			GetMinimum(), GetMaximum());
 
@@ -29,7 +28,7 @@ public class GradeBook {
 	}
 
     public int GetMinimum() {
-		int lowest = grades[0];
+		int lowest = grades[0, 0];
 		
 		foreach (int grade in grades) {
 			if (grade < lowest) {
@@ -42,7 +41,7 @@ public class GradeBook {
 
     public int GetMaximum() {
 
-		int highest = grades[0];
+		int highest = grades[0, 0];
 
 		foreach (int grade in grades) {
 			if (grade > highest) {
@@ -53,12 +52,13 @@ public class GradeBook {
 		return highest;
     }
 
-    public double GetAverage() {
+    public double GetAverage(int student) {
+		int amount = grades.GetLength(1);
 		int total = 0;
-		foreach (int grade in grades) {
-			total += grade;
+		for (int exam = 0; exam < amount; exam++) {
+			total += grades[student, exam];
 		}
-		return (double)total / grades.Length;
+		return (double)total / amount;
     }
 
     public void OutputBarChart() {
@@ -90,11 +90,18 @@ public class GradeBook {
     public void OutputGrades() {
 
         Console.WriteLine("The grades are:\n");
+        Console.Write("              ");
 
-        for(int student = 0; student < grades.Length; student++) {
-			Console.WriteLine("Student {0,2}: {1,3}", student + 1, grades[student]);
-		}
-
+        for (int test = 0; test < grades.GetLength(1); test++) {
+            Console.Write("Test {0}  ", test + 1);
+        }
+        Console.WriteLine("Average");
+        for (int student = 0; student < grades.GetLength(0); student++) {
+            Console.Write("Student {0,2}", student + 1);
+            for (int grade = 0; grade < grades.GetLength(1); grade++) {
+                Console.Write("{0,8}", grades[student, grade]);
+            }
+            Console.WriteLine("{0,9:F}", GetAverage(student));
+        }
     }
-
 }
