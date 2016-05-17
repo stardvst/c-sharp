@@ -1,71 +1,53 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 public class Program {
     public static void Main(string[] args) {
 
-        Employee[] employees = {
-                new Employee( "Jason", "Red", 5000M ),
-                new Employee( "Ashley", "Green", 7600M ),
-                new Employee( "Matthew", "Indigo", 3587.5M ),
-                new Employee( "James", "Indigo", 4700.77M ),
-                new Employee( "Luke", "Indigo", 6200M ),
-                new Employee( "Jason", "Blue", 3200M ),
-                new Employee( "Wendy", "Brown", 4236.4M )
-        };
+        List<string> items = new List<string>();
 
-        Console.WriteLine("Original array:");
-        foreach (var element in employees) {
-            Console.WriteLine(element);
+        items.Add("red");
+        items.Insert(0, "yellow");
+
+        // for loop
+        Console.Write("Display list contents with counter-controlled loop:");
+        for (int i = 0; i < items.Count; i++) {
+            Console.Write(" {0}", items[i]);
         }
 
-        // between 4000 and 6000
-        var between4K6K =
-            from employee in employees
-            where employee.MonthLySalary >= 4000M &&
-                employee.MonthLySalary <= 6000M
-            select employee;
-
-        Console.WriteLine(string.Format("\nEmployees earning in the " +
-            "range {0:C}-{1:C} per month:", 4000, 6000));
-        foreach (var element in between4K6K) {
-            Console.WriteLine(element);
+        // foreach loop
+        Console.Write("\nDisplay list contents with foreach statement:");
+        foreach (var item in items) {
+            Console.Write(" {0}", item);
         }
 
-        // order by last then first name 
-        var nameSorted =
-            from employee in employees
-            orderby employee.LastName, employee.FirstName
-            select employee;
+        items.Add("green");
+        items.Add("yellow");
 
-        Console.WriteLine("\nFirst employee when sorted by name:");
-        if (nameSorted.Any()) {
-            Console.WriteLine(nameSorted.First());
-        } else {
-            Console.WriteLine("No first employee found");
+        Console.Write("\nList with two new elements:");
+        foreach (var item in items) {
+            Console.Write(" {0}", item);
         }
 
-        // select last names
-        var lastnames =
-            from employee in employees
-            select employee.LastName;
-
-        // select distinct names in lastnames
-        Console.WriteLine("\nUnique employee last names:");
-        foreach (var element in lastnames.Distinct()) {
-            Console.WriteLine(element);
+        // remove item
+        items.Remove("yellow");
+        Console.Write("\nRemove first instance of yellow:");
+        foreach (var item in items) {
+            Console.Write(" {0}", item);
         }
 
-        // select first and last names
-        var names =
-            from employee in employees
-            select new { employee.FirstName, Last = employee.LastName };
-
-        // display full names
-        Console.WriteLine("\nNames only:");
-        foreach (var element in names) {
-            Console.WriteLine(element);
+        // remove at index 1
+        items.RemoveAt(1);
+        Console.Write("\nRemove second list element (green):");
+        foreach (var item in items) {
+            Console.Write(" {0}", item);
         }
+
+        Console.WriteLine("\n\"red\" is {0}in the list",
+            items.Contains("red") ? string.Empty : "not ");
+
+        Console.WriteLine("Count: {0}", items.Count);
+        Console.WriteLine("Capacity: {0}", items.Capacity);
 
     }
 }
