@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 public class Program {
@@ -39,7 +39,7 @@ public class Program {
             select employee;
 
         Console.WriteLine("\nFirst employee when sorted by name:");
-        if (nameSorted.Any()) {
+        if (nameSorted.Any()) { // if (nameSorted.Count() != 0)
             Console.WriteLine(nameSorted.First());
         } else {
             Console.WriteLine("No first employee found");
@@ -59,7 +59,10 @@ public class Program {
         // select first and last names
         var names =
             from employee in employees
-            select new { employee.FirstName, Last = employee.LastName };
+            // new creates an anonymous type
+            // LastName changes to Last, FirstName remains the same
+            // the compiler automatically generates a ToString method
+            select new { employee.FirstName, Last = employee.LastName }; 
 
         // display full names
         Console.WriteLine("\nNames only:");
