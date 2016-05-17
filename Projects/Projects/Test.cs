@@ -1,62 +1,71 @@
 ﻿using System;
 using System.Linq;
 
- public class Program {
+public class Program {
     public static void Main(string[] args) {
 
-        int[] values = { 2, 9, 5, 0, 3, 7, 1, 4, 8, 5 };
+        Employee[] employees = {
+                new Employee( "Jason", "Red", 5000M ),
+                new Employee( "Ashley", "Green", 7600M ),
+                new Employee( "Matthew", "Indigo", 3587.5M ),
+                new Employee( "James", "Indigo", 4700.77M ),
+                new Employee( "Luke", "Indigo", 6200M ),
+                new Employee( "Jason", "Blue", 3200M ),
+                new Employee( "Wendy", "Brown", 4236.4M )
+        };
 
-        Console.Write("Original array:");
-        foreach (var element in values) {
-            Console.Write(" {0}", element);
+        Console.WriteLine("Original array:");
+        foreach (var element in employees) {
+            Console.WriteLine(element);
         }
 
-        // filtering
-        var filtered =
-            from value in values
-            where value > 4
-            select value;
+        // between 4000 and 6000
+        var between4K6K =
+            from employee in employees
+            where employee.MonthLySalary >= 4000M &&
+                employee.MonthLySalary <= 6000M
+            select employee;
 
-        Console.Write("\nArray values greater than 4:");
-        foreach (var element in filtered) {
-            Console.Write(" {0}", element);
+        Console.WriteLine(string.Format("\nEmployees earning in the " +
+            "range {0:C}-{1:C} per month:", 4000, 6000));
+        foreach (var element in between4K6K) {
+            Console.WriteLine(element);
         }
 
-        // sorting
-        var sorted =
-            from value in values
-            orderby value
-            select value;
+        // order by last then first name 
+        var nameSorted =
+            from employee in employees
+            orderby employee.LastName, employee.FirstName
+            select employee;
 
-        Console.Write("\nOriginal array, sorted:");
-        foreach (var element in sorted) {
-            Console.Write(" {0}", element);
+        Console.WriteLine("\nFirst employee when sorted by name:");
+        if (nameSorted.Any()) {
+            Console.WriteLine(nameSorted.First());
+        } else {
+            Console.WriteLine("No first employee found");
         }
 
-        // sort the filtered results into descending order
-        var sortFilteredResults =
-            from value in filtered
-            orderby value descending
-            select value;
+        // select last names
+        var lastnames =
+            from employee in employees
+            select employee.LastName;
 
-        Console.Write(
-            "\nValues greater than 4, descending order (separately):");
-        foreach (var element in sortFilteredResults) {
-            Console.Write(" {0}", element);
+        // select distinct names in lastnames
+        Console.WriteLine("\nUnique employee last names:");
+        foreach (var element in lastnames.Distinct()) {
+            Console.WriteLine(element);
         }
-                                                                      
-        // filter original array and sort results in descending order
-        var sortedAndFiltered =
-            from value in values
-            where value > 4
-            orderby value descending
-            select value;
 
-        Console.Write(
-            "\nValues greater than 4, descending order (one query):");
-        foreach (var element in sortedAndFiltered) {
-            Console.WriteLine(" {0}", element);
+        // select first and last names
+        var names =
+            from employee in employees
+            select new { employee.FirstName, Last = employee.LastName };
+
+        // display full names
+        Console.WriteLine("\nNames only:");
+        foreach (var element in names) {
+            Console.WriteLine(element);
         }
-                
+
     }
 }
