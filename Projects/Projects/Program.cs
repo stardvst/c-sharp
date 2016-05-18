@@ -1,29 +1,49 @@
-﻿public class Employee {
+﻿public class Invoice {
 
-    private decimal monthlySalaryValue;
+    private int quantity;
+    private decimal price;
 
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public decimal MonthLySalary {
+    public Invoice(string number, string description, int q, decimal p) {
+        PartNumber = number;
+        PartDescription = description;
+        Quantity = q;
+        Price = p;
+    }
+
+    public string PartNumber { get; set; }
+    public string PartDescription { get; set; }
+    public int Quantity {
         get {
-            return monthlySalaryValue;
+            return quantity;
         }
         set {
-            if (value>=0M) {
-                monthlySalaryValue = value;
+            if (value > 0) {
+                quantity = value;
+            } else {
+                quantity = 0;
+            }
+        }
+    }
+    public decimal Price {
+        get {
+            return price;
+        }
+        set {
+            if (value > 0.0M) {
+                price = value;
+            } else {
+                price = 0.0M;
             }
         }
     }
 
-    public Employee(string first,string last,decimal salary) {
-        FirstName = first;
-        LastName = last;
-        MonthLySalary = salary;
+    public decimal GetInvoiceAmount() {
+        return quantity * price;
     }
 
     public override string ToString() {
-        return string.Format("{0,-10} {1,-10} {2,10:C}",
-            FirstName, LastName, MonthLySalary);
+        return string.Format("{0, 10} {1, 20} {2, 10} {3, 10:C}", 
+            PartNumber, PartDescription, Quantity, Price);
     }
 
 }
