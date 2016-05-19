@@ -1,49 +1,31 @@
-﻿public class Invoice {
+﻿using System;
 
-    private int quantity;
-    private decimal price;
+public class Time {
 
-    public Invoice(string number, string description, int q, decimal p) {
-        PartNumber = number;
-        PartDescription = description;
-        Quantity = q;
-        Price = p;
-    }
+    private int hour;
+    private int minute;
+    private int second;
 
-    public string PartNumber { get; set; }
-    public string PartDescription { get; set; }
-    public int Quantity {
-        get {
-            return quantity;
-        }
-        set {
-            if (value > 0) {
-                quantity = value;
-            } else {
-                quantity = 0;
-            }
-        }
-    }
-    public decimal Price {
-        get {
-            return price;
-        }
-        set {
-            if (value > 0.0M) {
-                price = value;
-            } else {
-                price = 0.0M;
-            }
+    public void SetTime(int h, int m, int s) {
+        if ((h >= 0 && h < 24) && (m >= 0 && m < 60) &&
+            s >= 0 && s < 60) {
+            hour = h;
+            minute = m;
+            second = s;
+        } else {
+            throw new ArgumentOutOfRangeException();
         }
     }
 
-    public decimal GetInvoiceAmount() {
-        return quantity * price;
+    public string toUniversalString() {
+        return string.Format("{0:D2}:{1:D2}:{2:D2}",
+            hour, minute, second);
     }
 
     public override string ToString() {
-        return string.Format("{0, 10} {1, 20} {2, 10} {3, 10:C}", 
-            PartNumber, PartDescription, Quantity, Price);
+        return string.Format("{0}:{1:D2}:{2:D2} {3}",
+            ((hour == 0 || hour == 12) ? 12 : hour % 12),
+            minute, second, (hour < 12 ? "AM" : "PM"));
     }
 
 }
