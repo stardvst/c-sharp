@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Linq;
 
 public class Program {
     public static void Main(string[] args) {
 
-        Console.Write("Enter a senctence: ");
-        string input = Console.ReadLine();
-
-        var orderedWords =
-            from word in input.Split()
-            orderby word.ToLower()
-            select word.ToLower();
-        
-        foreach (var word in orderedWords.Distinct()) {
-            Console.Write("{0} ", word);
-        }   
+        Rectangle rect = new Rectangle(5, 3);
+        Console.WriteLine("Perimeter: {0}, Area: {1}",
+            rect.Perimeter, rect.Area);
 
     }
 }
