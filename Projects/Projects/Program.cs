@@ -1,20 +1,19 @@
-﻿public class Employee {
+﻿using System;
+
+public class Employee {
+
+    public static int Count { get; private set; }
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
-    public Date BirthDate { get; private set; }
-    public Date HireDate { get; private set; }
-
-    public Employee(string first, string last, Date birth, Date hire) {
+    
+    public Employee(string first, string last) {
         FirstName = first;
         LastName = last;
-        BirthDate = birth;
-        HireDate = hire;
+        ++Count;
+        Console.WriteLine("Employee constructor: {0} {1}; Count = {2}",
+            FirstName, LastName, Count);
     }
-
-    public override string ToString() {
-        return string.Format("{0}, {1} Hired: {2} Birthday: {3}",
-            FirstName, LastName, HireDate, BirthDate);
-    }
+  
 
 }
