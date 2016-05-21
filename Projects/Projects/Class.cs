@@ -1,56 +1,39 @@
 ﻿using System;
 
-public class Date {
+public class BasePlusCommissionEmployee: CommissionEmployee {
 
-    private int month;
-    private int day;
+    private decimal baseSalary;
 
-    public int Year { get; private set; }
-
-    public Date(int d, int m, int y) {
-        Month = m; // month needs to be evaluated first
-        Day = d;
-        Year = y;
-        Console.WriteLine("Date object constructor for date {0}", this);
+    public BasePlusCommissionEmployee(string first, string last,
+        string ssn, decimal sales, decimal rate, decimal salary)
+        : base(first, last, ssn, sales, rate) {
+        BaseSalary = salary;
     }
 
-    public int Month {
+    public decimal BaseSalary {
         get {
-            return month;
-        }
+            return baseSalary;
+        } 
         set {
-            if (value > 0 && value <= 12) {
-                month = value;
-            } else {
-                throw new ArgumentOutOfRangeException(
-                    "Month", value, "Month must be 1-12");
-            }
+            if (value >= 0)
+                baseSalary = value;
+            else
+                throw new ArgumentOutOfRangeException("BaseSalary",
+                value, "BaseSalary must be >= 0");
         }
     }
 
-    public int Day {
-        get {
-            return day;
-        }
-        private set { // make writing inaccessible outside the class
-            int[] daysPerMonth = { 0, 31, 28, 31, 30, 31, 30,
-                        31, 31, 30, 31, 30, 31 };
-
-            if (value > 0 && value <= daysPerMonth[Month]) {
-                day = value;
-            } else if (Month == 2 && value == 29 &&
-                (Year % 400 == 0 || (Year % 4 == 0 && Year % 100 != 0))) {
-                day = value;
-            } else {
-                throw new ArgumentOutOfRangeException(
-                    "Day", value, "Day out of range for current month/year");
-            }
-        }
+    public override decimal Earnings() {
+        return baseSalary + (commissionRate * grossSales);
     }
-
 
     public override string ToString() {
-        return string.Format("{0}/{1}/{2}", Day, Month, Year);
+        return string.Format(
+            "{0}: {1} {2}\n{3}: {4}\n{5}: {6:C}\n{7}: {8:F2}\n{9}: {10:C}",
+            "base-salaried commission employee", firstName, lastName,
+            "social security number", socialSecurityNumber,
+            "gross sales", grossSales, "commission rate", commissionRate,
+            "base salary", baseSalary);
     }
 
 }
