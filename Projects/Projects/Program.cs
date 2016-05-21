@@ -1,45 +1,79 @@
-﻿public class Rectangle {
+﻿using System;
 
-    private float length;
-    private float width;
+public class CommissionEmployee: Object {
 
-    public Rectangle(float l = 1, float w = 1) {
-        Length = l;
-        Width = w;
+    private string firstName;
+    private string lastName;
+    private string socialSecurityNumber;
+    private decimal grossSales; // gross weekly sales
+    private decimal commissionRate; // commission percentage
+
+    public CommissionEmployee(string first, string last, string ssn,
+        decimal sales, decimal rate) {
+        // implicit call to object constructor occurs here
+        firstName = first;
+        lastName = last;
+        socialSecurityNumber = ssn;
+        GrossSales = sales; // validate gross sales via property
+        CommissionRate = rate; // validate commission rate via property
     }
 
-    public float Length {
+    public string FirstName {
         get {
-            return length;
+            return firstName;
+        }
+    }
+
+    public string LastName {
+        get {
+            return lastName;
+        }
+    }
+
+    public string SocialSecurityNumber {
+        get {
+            return socialSecurityNumber;
+        }
+    }
+
+    public decimal GrossSales {
+        get {
+            return grossSales;
         }
         set {
-            if (value > 0.0 && value < 20.0) {
-                length = value;
+            if (value >= 0) {
+                grossSales = value;
+            } else {
+                throw new ArgumentOutOfRangeException(
+                    "GrossSales", value, "GrossSales must be >= 0");
             }
         }
     }
 
-    public float Width {
+    public decimal CommissionRate {
         get {
-            return width;
-        }
+            return commissionRate;
+        } 
         set {
-            if (value > 0.0 && value < 20.0) {
-                width = value;
+            if (value > 0 && value < 1)
+                commissionRate = value;
+            else {
+                throw new ArgumentOutOfRangeException("CommissionRate",
+                    value, "CommissionRate must be > 0 and < 1");
             }
-        }
+        } 
     }
 
-    public float Perimeter {
-        get {
-            return 2 * (Length + Width);
-        }
+    public decimal Earnings() {
+        return commissionRate * grossSales;
     }
 
-    public float Area {
-        get {
-            return Length * Width;
-        }
+    public override string ToString() {
+        return string.Format(
+        "{0}: {1} {2}\n{3}: {4}\n{5}: {6:C}\n{7}: {8:F2}",
+        "commission employee", FirstName, LastName,
+        "social security number", SocialSecurityNumber,
+        "gross sales", GrossSales, "commission rate", CommissionRate);
     }
 
 }
