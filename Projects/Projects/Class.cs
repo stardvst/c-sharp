@@ -24,16 +24,12 @@ public class BasePlusCommissionEmployee: CommissionEmployee {
     }
 
     public override decimal Earnings() {
-        return baseSalary + (commissionRate * grossSales);
+        return baseSalary + (CommissionRate * GrossSales);
     }
 
     public override string ToString() {
-        return string.Format(
-            "{0}: {1} {2}\n{3}: {4}\n{5}: {6:C}\n{7}: {8:F2}\n{9}: {10:C}",
-            "base-salaried commission employee", firstName, lastName,
-            "social security number", socialSecurityNumber,
-            "gross sales", grossSales, "commission rate", commissionRate,
-            "base salary", baseSalary);
+        return string.Format("base-salaried {0}\nbase salary: {1:C}",
+            base.ToString(), BaseSalary);
     }
 
 }
