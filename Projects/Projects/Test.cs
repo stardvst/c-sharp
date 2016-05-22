@@ -3,33 +3,32 @@
 public class Program {
     public static void Main(string[] args) {
 
-        CommissionEmployee commissionEmployee = new CommissionEmployee(
-            "Sue", "Jones", "222-22-2222", 10000.00M, .06M);
+        SalariedEmployee salariedEmployee =
+            new SalariedEmployee("John", "Smith", "111-11-1111", 800.00M);
+        HourlyEmployee hourlyEmployee =
+            new HourlyEmployee("Karen", "Price",
+            "222-22-2222", 16.75M, 40.0M);
 
-        BasePlusCommissionEmployee basePlusCommissionEmployee =
-            new BasePlusCommissionEmployee("Bob", "Lewis",
-            "333-33-3333", 5000.00M, .04M, 300.00M);
+        Console.WriteLine("Employees processed individually:\n");
+        Console.WriteLine("{0}\nearned: {1:C}\n",
+            salariedEmployee, salariedEmployee.Earnings());
+        Console.WriteLine("{0}\nearned: {1:C}\n",
+            hourlyEmployee, hourlyEmployee.Earnings());
 
-        Console.WriteLine("{0} {1}:\n\n{2}\n{3}: {4:C}\n",
-            "Call CommissionEmployee's ToString and Earnings methods ",
-            "with base-class reference to base class object",
-            commissionEmployee.ToString(),
-            "earnings", commissionEmployee.Earnings());
+        Employee[] employees = new Employee[2];
 
-        Console.WriteLine("{0} {1}:\n\n{2}\n{3}: {4:C}\n",
-            "Call BasePlusCommissionEmployee's ToString and Earnings ",
-               "methods with derived class reference to derived-class object",
-            basePlusCommissionEmployee.ToString(),
-               "earnings", basePlusCommissionEmployee.Earnings());
+        employees[0] = salariedEmployee;
+        employees[1] = hourlyEmployee;
 
-        // invoke ToString and Earnings on derived-class object
-        // using base-class variable
-        CommissionEmployee commissionEmployee2 = basePlusCommissionEmployee;
-        Console.WriteLine("{0} {1}:\n\n{2}\n{3}: {4:C}",
-            "Call BasePlusCommissionEmployee's ToString and Earnings ",
-            "with base class reference to derived-class object",
-            commissionEmployee2.ToString(), "earnings",
-            commissionEmployee2.Earnings());
+        Console.WriteLine("Employees processed polymorphically:\n");
+        foreach (Employee current in employees) {
+            Console.WriteLine(current);
+            Console.WriteLine("earned {0:C}\n", current.Earnings());
+        }
+
+        for (int j = 0; j < employees.Length; j++)
+            Console.WriteLine("Employee {0} is a {1}", j,
+            employees[j].GetType());
 
     }
 }
