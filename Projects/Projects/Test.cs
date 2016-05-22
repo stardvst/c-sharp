@@ -3,19 +3,26 @@
 public class Program {
     public static void Main(string[] args) {
 
-        IPayable[] payableObjects = new IPayable[4];
+        ComplexNumber x, y;
 
-        payableObjects[0] = new Invoice("01234", "seat", 2, 375.00M);
-        payableObjects[1] = new Invoice("56789", "tire", 4, 79.95M);
-        payableObjects[2] = new SalariedEmployee("John", "Smith", "111-11-1111", 800.00M);
-        payableObjects[3] = new SalariedEmployee("Lisa", "Barnes", "888-88-8888", 1200.00M);
+        Console.Write("Enter the real part of complex number x: ");
+        double realPart = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Enter the imaginary part of complex number x: ");
+        double imaginaryPart = Convert.ToDouble(Console.ReadLine());
 
-        Console.WriteLine("Invoices and Employees processed polymorphically:\n");
+        x = new ComplexNumber(realPart, imaginaryPart);
 
-        foreach (var current in payableObjects) {
-            Console.WriteLine("{0}\npayment due: {1:C}\n",
-                current, current.GetPaymentAmount());
-        }
+        Console.Write("Enter the real part of complex number y: ");
+        realPart = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Enter the imaginary part of complex number y: ");
+        imaginaryPart = Convert.ToDouble(Console.ReadLine());
+
+        y = new ComplexNumber(realPart, imaginaryPart);
+
+        Console.WriteLine();
+        Console.WriteLine("{0} + {1} = {2}", x, y, x + y);
+        Console.WriteLine("{0} - {1} = {2}", x, y, x - y);
+        Console.WriteLine("{0} * {1} = {2}", x, y, x * y);
 
     }
 }
