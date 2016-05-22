@@ -3,32 +3,19 @@
 public class Program {
     public static void Main(string[] args) {
 
-        SalariedEmployee salariedEmployee =
-            new SalariedEmployee("John", "Smith", "111-11-1111", 800.00M);
-        HourlyEmployee hourlyEmployee =
-            new HourlyEmployee("Karen", "Price",
-            "222-22-2222", 16.75M, 40.0M);
+        IPayable[] payableObjects = new IPayable[4];
 
-        Console.WriteLine("Employees processed individually:\n");
-        Console.WriteLine("{0}\nearned: {1:C}\n",
-            salariedEmployee, salariedEmployee.Earnings());
-        Console.WriteLine("{0}\nearned: {1:C}\n",
-            hourlyEmployee, hourlyEmployee.Earnings());
+        payableObjects[0] = new Invoice("01234", "seat", 2, 375.00M);
+        payableObjects[1] = new Invoice("56789", "tire", 4, 79.95M);
+        payableObjects[2] = new SalariedEmployee("John", "Smith", "111-11-1111", 800.00M);
+        payableObjects[3] = new SalariedEmployee("Lisa", "Barnes", "888-88-8888", 1200.00M);
 
-        Employee[] employees = new Employee[2];
+        Console.WriteLine("Invoices and Employees processed polymorphically:\n");
 
-        employees[0] = salariedEmployee;
-        employees[1] = hourlyEmployee;
-
-        Console.WriteLine("Employees processed polymorphically:\n");
-        foreach (Employee current in employees) {
-            Console.WriteLine(current);
-            Console.WriteLine("earned {0:C}\n", current.Earnings());
+        foreach (var current in payableObjects) {
+            Console.WriteLine("{0}\npayment due: {1:C}\n",
+                current, current.GetPaymentAmount());
         }
-
-        for (int j = 0; j < employees.Length; j++)
-            Console.WriteLine("Employee {0} is a {1}", j,
-            employees[j].GetType());
 
     }
 }

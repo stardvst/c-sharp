@@ -1,6 +1,32 @@
 ﻿using System;
 
-public class SalariedEmployee: Employee {
+public abstract class Employee : IPayable {
+
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public string SocialSecurityNumber { get; private set; }
+    private decimal grossSales; // gross weekly sales
+    private decimal commissionRate; // commission percentage
+
+    public Employee(string first, string last, string ssn) {
+        FirstName = first;
+        LastName = last;
+        SocialSecurityNumber = ssn;
+    }
+
+    public override string ToString() {
+        return string.Format("{0} {1}\nsocial security number: {2}",
+            FirstName, LastName, SocialSecurityNumber);
+    }
+
+    // Note: We do not implement IPayable method GetPaymentAmount here, so
+    // this class must be declared abstract to avoid a compilation error.
+    public abstract decimal GetPaymentAmount();
+
+}
+
+
+public class SalariedEmployee : Employee {
 
     private decimal weeklySalary;
 
@@ -13,7 +39,7 @@ public class SalariedEmployee: Employee {
     public decimal WeeklySalary {
         get {
             return weeklySalary;
-        } 
+        }
         set {
             if (value >= 0)
                 weeklySalary = value;
@@ -23,67 +49,13 @@ public class SalariedEmployee: Employee {
         }
     }
 
-    public override decimal Earnings() {
-        return WeeklySalary;
-    }
-
     public override string ToString() {
         return string.Format("salaried employee: {0}\n{1}: {2:C}",
         base.ToString(), "weekly salary", WeeklySalary);
     }
 
-}
-
-
-public class HourlyEmployee: Employee {
-
-    private decimal wage;
-    private decimal hours;
-
-    public HourlyEmployee(string first, string last, string ssn,
-    decimal hourlyWage, decimal hoursWorked)
-        : base(first, last, ssn) {
-        Wage = hourlyWage;
-        Hours = hoursWorked;
-    }
-
-    public decimal Wage {
-        get {
-            return wage;
-        }
-        set {
-            if (value >= 0)
-                wage = value;
-            else
-                throw new ArgumentOutOfRangeException("Wage",
-                value, "Wage must be >= 0");
-        }
-    }
-
-    public decimal Hours {
-        get {
-            return hours;
-        }
-        set {
-            if (value >= 0 && value <= 168)
-                hours = value;
-            else
-                throw new ArgumentOutOfRangeException("Hours",
-                value, "Hours must be >= 0 and <= 168");
-        } 
-    }
-
-    public override decimal Earnings() {
-        if (Hours <= 40) // no overtime
-            return Wage * Hours;
-        else
-            return (40 * Wage) + ((Hours - 40) * Wage * 1.5M);
-    }
-
-    public override string ToString() {
-        return string.Format(
-        "hourly employee: {0}\n{1}: {2:C}; {3}: {4:F2}",
-        base.ToString(), "hourly wage", Wage, "hours worked", Hours);
+    public override decimal GetPaymentAmount() {
+        return WeeklySalary;
     }
 
 }
