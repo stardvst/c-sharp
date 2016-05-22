@@ -1,28 +1,35 @@
 ﻿using System;
 
-public class Program {
-    public static void Main(string[] args) {
+class DivideByZeroNoExceptionHandling {
+    static void Main() {
 
-        ComplexNumber x, y;
+        bool continueLoop = true;
 
-        Console.Write("Enter the real part of complex number x: ");
-        double realPart = Convert.ToDouble(Console.ReadLine());
-        Console.Write("Enter the imaginary part of complex number x: ");
-        double imaginaryPart = Convert.ToDouble(Console.ReadLine());
+        do {
+            try {
 
-        x = new ComplexNumber(realPart, imaginaryPart);
+                Console.Write("Enter an integer numerator: ");
+                int numerator = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter an integer denominator: ");
+                int denominator = Convert.ToInt32(Console.ReadLine());
 
-        Console.Write("Enter the real part of complex number y: ");
-        realPart = Convert.ToDouble(Console.ReadLine());
-        Console.Write("Enter the imaginary part of complex number y: ");
-        imaginaryPart = Convert.ToDouble(Console.ReadLine());
+                int result = numerator / denominator;
 
-        y = new ComplexNumber(realPart, imaginaryPart);
-
-        Console.WriteLine();
-        Console.WriteLine("{0} + {1} = {2}", x, y, x + y);
-        Console.WriteLine("{0} - {1} = {2}", x, y, x - y);
-        Console.WriteLine("{0} * {1} = {2}", x, y, x * y);
-
+                Console.WriteLine("\nResult: {0} / {1} = {2}",
+                numerator, denominator, result);
+                continueLoop = false;
+            }
+            catch (FormatException formatException) {
+                Console.WriteLine("\n" + formatException.Message);
+                Console.WriteLine(
+                "You must enter two integers. Please try again.\n");
+            }
+            catch (DivideByZeroException divideByZeroException) {
+                Console.WriteLine("\n" + divideByZeroException.Message);
+                Console.WriteLine(
+                "Zero is an invalid denominator. Please try again.\n");
+            }
+        } while (continueLoop);
+        
     }
 }
